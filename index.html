@@ -192,7 +192,15 @@
                             <span class="hidden sm:inline">Copy</span>
                         </button>
                         <div class="text-cyan-400 pr-12 sm:pr-20 break-words overflow-wrap-anywhere">
-                            <span class="text-gray-500"># Quick install for macOS (Apple Silicon)</span><br>
+                            <div class="flex items-center gap-2 mb-2 flex-wrap">
+                                <span class="text-gray-500" id="hero-install-label"># Quick install for macOS (Apple Silicon)</span>
+                                <select id="hero-os-selector" onchange="onHeroOSSelectorChange()" class="bg-[#0f172a] border border-cyan-500/30 text-cyan-400 text-xs px-2 py-1 rounded focus:outline-none focus:border-cyan-500">
+                                    <option value="auto">Auto-detect</option>
+                                    <option value="darwin_arm64">macOS (Apple Silicon)</option>
+                                    <option value="darwin_amd64">macOS (Intel)</option>
+                                    <option value="linux_amd64">Linux</option>
+                                </select>
+                            </div>
                             <span id="hero-install-command" class="break-all">curl -L https://github.com/kodehash/katichai-dist/releases/latest/download/katich_darwin_arm64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/</span>
                         </div>
                     </div>
@@ -510,7 +518,15 @@
                 <!-- Installation command -->
                 <div class="code-block rounded-xl p-4 sm:p-6 md:p-8 mb-8 max-w-4xl mx-auto overflow-x-auto">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
-                        <span class="text-gray-400 font-mono text-xs sm:text-sm">Quick Install (macOS Apple Silicon)</span>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-gray-400 font-mono text-xs sm:text-sm" id="install-label">Quick Install (macOS Apple Silicon)</span>
+                            <select id="os-selector" onchange="onOSSelectorChange()" class="bg-[#0f172a] border border-cyan-500/30 text-cyan-400 text-xs px-2 py-1 rounded focus:outline-none focus:border-cyan-500">
+                                <option value="auto">Auto-detect</option>
+                                <option value="darwin_arm64">macOS (Apple Silicon)</option>
+                                <option value="darwin_amd64">macOS (Intel)</option>
+                                <option value="linux_amd64">Linux</option>
+                            </select>
+                        </div>
                         <button onclick="copyToClipboard()" class="text-cyan-400 hover:text-cyan-300 text-xs sm:text-sm flex items-center gap-2 self-end sm:self-auto">
                             <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
@@ -573,6 +589,107 @@
     </footer>
 
     <script>
+        // OS Detection and Command Updates
+        const installCommands = {
+            darwin_arm64: {
+                label: "macOS (Apple Silicon)",
+                command: "curl -L https://github.com/kodehash/katichai-dist/releases/latest/download/katich_darwin_arm64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/"
+            },
+            darwin_amd64: {
+                label: "macOS (Intel)",
+                command: "curl -L https://github.com/kodehash/katichai-dist/releases/latest/download/katich_darwin_amd64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/"
+            },
+            linux_amd64: {
+                label: "Linux",
+                command: "curl -L https://github.com/kodehash/katichai-dist/releases/latest/download/katich_linux_amd64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/"
+            }
+        };
+
+        function detectOS() {
+            const platform = navigator.platform.toLowerCase();
+            const userAgent = navigator.userAgent.toLowerCase();
+            
+            // Detect macOS
+            if (platform.includes('mac') || userAgent.includes('mac')) {
+                // Try to detect Apple Silicon vs Intel
+                // Note: This is not 100% reliable from browser, but we can try
+                // Apple Silicon Macs typically report as arm64
+                if (navigator.userAgentData && navigator.userAgentData.platform === 'macOS') {
+                    // Newer API - check if available
+                    return 'darwin_arm64'; // Default to Apple Silicon for newer Macs
+                }
+                // For older detection, default to Apple Silicon (more common now)
+                return 'darwin_arm64';
+            }
+            
+            // Detect Linux
+            if (platform.includes('linux') || userAgent.includes('linux')) {
+                return 'linux_amd64';
+            }
+            
+            // Default fallback
+            return 'darwin_arm64';
+        }
+
+        function updateInstallCommand(os = null) {
+            const detectedOS = os || detectOS();
+            const config = installCommands[detectedOS] || installCommands.darwin_arm64;
+            
+            // Update final CTA section
+            const installCommandEl = document.getElementById('install-command');
+            const installLabelEl = document.getElementById('install-label');
+            const osSelectorEl = document.getElementById('os-selector');
+            
+            if (installCommandEl) {
+                installCommandEl.textContent = config.command;
+            }
+            if (installLabelEl) {
+                installLabelEl.textContent = `Quick Install (${config.label})`;
+            }
+            if (osSelectorEl && osSelectorEl.value === 'auto') {
+                osSelectorEl.value = detectedOS;
+            }
+        }
+
+        function updateHeroCommand(os = null) {
+            const detectedOS = os || detectOS();
+            const config = installCommands[detectedOS] || installCommands.darwin_arm64;
+            
+            // Update hero section
+            const heroCommandEl = document.getElementById('hero-install-command');
+            const heroLabelEl = document.getElementById('hero-install-label');
+            const heroOsSelectorEl = document.getElementById('hero-os-selector');
+            
+            if (heroCommandEl) {
+                heroCommandEl.textContent = config.command;
+            }
+            if (heroLabelEl) {
+                heroLabelEl.textContent = `# Quick install for ${config.label}`;
+            }
+            if (heroOsSelectorEl && heroOsSelectorEl.value === 'auto') {
+                heroOsSelectorEl.value = detectedOS;
+            }
+        }
+
+        // Update commands when OS selector changes (event handlers)
+        function onOSSelectorChange() {
+            const selector = document.getElementById('os-selector');
+            if (selector && selector.value !== 'auto') {
+                updateInstallCommand(selector.value);
+            } else {
+                updateInstallCommand();
+            }
+        }
+
+        function onHeroOSSelectorChange() {
+            const selector = document.getElementById('hero-os-selector');
+            if (selector && selector.value !== 'auto') {
+                updateHeroCommand(selector.value);
+            } else {
+                updateHeroCommand();
+            }
+        }
+
         // Typing animation for hero section
         const textToType = ">_katich ai";
         const typedTextElement = document.getElementById('typed-text');
@@ -589,6 +706,12 @@
         // Start typing animation when page loads
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(typeCharacter, 500); // Initial delay before starting
+            
+            // Initialize OS detection after a short delay
+            setTimeout(() => {
+                updateInstallCommand();
+                updateHeroCommand();
+            }, 1000);
         });
 
         // Scroll animation observer
