@@ -211,7 +211,7 @@
                                     <option value="linux_amd64">Linux</option>
                                 </select>
                             </div>
-                            <span id="hero-install-command" class="break-all">curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_arm64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/</span>
+                            <span id="hero-install-command" class="break-all">curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_arm64.tar.gz && tar -xzf katich_darwin_arm64.tar.gz && sudo mv katich /usr/local/bin/</span>
                         </div>
                     </div>
                 </div>
@@ -441,7 +441,9 @@
                     <p class="text-gray-400 mb-6">Download and install Katich in seconds with a single command</p>
                     <div class="code-block rounded-lg p-4 font-mono text-xs text-left text-cyan-400 overflow-x-auto">
                         <span class="text-gray-500"># macOS (Apple Silicon)</span><br>
-                        curl -L https://github.com/<br>kodehash/katichai/<br>releases/latest/download/<br>katich_darwin_arm64.tar.gz<br>-o katich.tar.gz
+                        curl -LO https://github.com/<br>kodehash/katichai/<br>releases/download/v1.1.3/<br>katich_darwin_arm64.tar.gz &amp;&amp;<br>
+                        tar -xzf katich_darwin_arm64.tar.gz &amp;&amp;<br>
+                        sudo mv katich /usr/local/bin/
                     </div>
                 </div>
                 
@@ -545,7 +547,7 @@
                         </button>
                     </div>
                     <code id="install-command" class="font-mono text-xs sm:text-sm md:text-base text-cyan-400 block text-left break-all overflow-wrap-anywhere">
-                        curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_arm64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/
+                        curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_arm64.tar.gz && tar -xzf katich_darwin_arm64.tar.gz && sudo mv katich /usr/local/bin/
                     </code>
                 </div>
                 
@@ -617,15 +619,15 @@
         const installCommands = {
             darwin_arm64: {
                 label: "macOS (Apple Silicon)",
-                command: "curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_arm64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/"
+                command: "curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_arm64.tar.gz && tar -xzf katich_darwin_arm64.tar.gz && sudo mv katich /usr/local/bin/"
             },
             darwin_amd64: {
                 label: "macOS (Intel)",
-                command: "curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_amd64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/"
+                command: "curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_amd64.tar.gz && tar -xzf katich_darwin_amd64.tar.gz && sudo mv katich /usr/local/bin/"
             },
             linux_amd64: {
                 label: "Linux",
-                command: "curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_linux_amd64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/"
+                command: "curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_linux_amd64.tar.gz && tar -xzf katich_linux_amd64.tar.gz && sudo mv katich /usr/local/bin/"
             }
         };
 

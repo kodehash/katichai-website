@@ -67,13 +67,13 @@ Now properly configured with:
 curl -L github.com/kodehash/katichai/releases/latest | tar -xz
 
 # After (macOS Apple Silicon)
-curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_arm64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/
+curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_arm64.tar.gz && tar -xzf katich_darwin_arm64.tar.gz && sudo mv katich /usr/local/bin/
 ```
 
 ### Final CTA Install Command
 ```bash
 # Updated to proper syntax with full URL and correct binary name
-curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_arm64.tar.gz -o katich.tar.gz && tar -xzf katich.tar.gz && sudo mv katich /usr/local/bin/
+curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_arm64.tar.gz && tar -xzf katich_darwin_arm64.tar.gz && sudo mv katich /usr/local/bin/
 ```
 
 ## 🧪 Testing Checklist

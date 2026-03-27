@@ -30,21 +30,24 @@ Katichai prevents unnecessary AI-generated code, detects duplicated logic, enfor
 
 **macOS (Apple Silicon):**
 ```bash
-curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_arm64.tar.gz | tar -xz
+curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_arm64.tar.gz
+tar -xzf katich_darwin_arm64.tar.gz
 xattr -d com.apple.quarantine katich-darwin-arm64 2>/dev/null || true
 sudo mv katich-darwin-arm64 /usr/local/bin/katich
 ```
 
 **macOS (Intel):**
 ```bash
-curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_darwin_amd64.tar.gz | tar -xz
+curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_darwin_amd64.tar.gz
+tar -xzf katich_darwin_amd64.tar.gz
 xattr -d com.apple.quarantine katich-darwin-amd64 2>/dev/null || true
 sudo mv katich-darwin-amd64 /usr/local/bin/katich
 ```
 
 **Linux:**
 ```bash
-curl -L https://github.com/kodehash/katichai/releases/latest/download/katich_linux_amd64.tar.gz | tar -xz
+curl -LO https://github.com/kodehash/katichai/releases/download/v1.1.3/katich_linux_amd64.tar.gz
+tar -xzf katich_linux_amd64.tar.gz
 sudo mv katich-linux-amd64 /usr/local/bin/katich
 ```
 
